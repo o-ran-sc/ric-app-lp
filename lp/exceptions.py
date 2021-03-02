@@ -13,17 +13,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 # ==================================================================================
-from setuptools import setup, find_packages
+"""
+custom logic exceptions
+"""
 
-setup(
-    name="lp",
-    version="0.1.0",
-    packages=find_packages(exclude=["tests.*", "tests"]),
-    author="O-RAN-SC Community",
-    description="Load Predictor Xapp for traffic steering use case",
-    url="https://gerrit.o-ran-sc.org/r/admin/repos/ric-app/lp",
-    install_requires=["ricxappframe>=1.3.0,<2.0.0"],
-    entry_points={"console_scripts": ["start-lp.py=lp.main:start"]},  
-    license="Apache 2.0",
-    data_files=[("", ["LICENSE.txt"])],
-)
+
+class UENotFound(BaseException):
+    pass

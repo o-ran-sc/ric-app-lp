@@ -29,6 +29,9 @@ RUN apk update && apk add gcc musl-dev
 # Install
 COPY setup.py /tmp
 COPY LICENSE.txt /tmp/
+COPY lp /tmp/lp
 RUN pip install /tmp
 
 # TO DO: ADD RUN COMMANDS 
+ENV PYTHONUNBUFFERED 1
+CMD start-lp.py

@@ -22,7 +22,7 @@ setup(
     author="O-RAN-SC Community",
     description="Load Predictor Xapp for traffic steering use case",
     url="https://gerrit.o-ran-sc.org/r/admin/repos/ric-app/lp",
-    install_requires=["ricxappframe>=1.3.0,<2.0.0"],
+    install_requires=["ricxappframe>=1.1.1,<2.0.0"],
     entry_points={"console_scripts": ["start-lp.py=lp.main:start"]},  
     license="Apache 2.0",
     data_files=[("", ["LICENSE.txt"])],

@@ -16,6 +16,23 @@
       "message": "Per the release requirement, configure the repo for documentation by adding the corresponding doc build targets to the tox.ini file. ",
       "revId": "1460b8299c787f48654f089d1856b569ad64f8d7",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cac673e_19eae07c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000125
+      },
+      "writtenOn": "2021-06-24T00:40:18Z",
+      "side": 1,
+      "message": "recheck",
+      "revId": "1460b8299c787f48654f089d1856b569ad64f8d7",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }

@@ -25,7 +25,7 @@ import json
 from os import getenv
 from ricxappframe.xapp_frame import RMRXapp, rmr
 from lp import sdl
-from lp.exceptions import UENotFound
+from lp.exceptions import UENotFound, CellNotFound
 
 
 # pylint: disable=invalid-name
@@ -82,11 +82,11 @@ def lp_req_handler(self, summary, sbuf):
     for ueid in ue_list:
         try:
             uedata = sdl.get_uedata(self, ueid)
-            predict()
+            predict(self, uedata)
         except UENotFound:
             self.logger.warning("lp_req_handler received a TS Request for a UE that does not exist!")
 
-def predict(self):
+def predict(self, uedata):
     """
     This is the method that's to perform prediction based on a model
     For now it just returns dummy data

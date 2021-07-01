@@ -20,3 +20,5 @@ custom logic exceptions
 
 class UENotFound(BaseException):
     pass
+class CellNotFound(BaseException):
+    pass

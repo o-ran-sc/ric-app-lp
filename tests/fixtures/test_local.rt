@@ -1,0 +1,7 @@
+# do NOT use localhost, seems unresolved on jenkins VMs
+newrt|start
+mse| 30000 | -1 | 127.0.0.1:4560
+mse| 30001 | -1 | 127.0.0.1:4666
+mse| 60001 | -1 | 127.0.0.1:4560
+mse| 13111 | -1 | 127.0.0.1:4560
+newrt|end

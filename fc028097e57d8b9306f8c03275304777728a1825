@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43916769_cae4a83f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-07-06T20:47:43Z",
+      "side": 1,
+      "message": "Bump up version number in setup.py and container version file. Next will update the release file as a previous attempt failed in the release-verify job.",
+      "revId": "fc028097e57d8b9306f8c03275304777728a1825",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

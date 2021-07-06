@@ -16,6 +16,23 @@
       "message": "With the latest code change, bump up the container version number and update the release file to reflect the change.",
       "revId": "6a76b15fc65ff0681d6db98f6208e9f36717b128",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8bacb2c_fc66ea94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-07-06T20:35:15Z",
+      "side": 1,
+      "message": "stage-release",
+      "revId": "6a76b15fc65ff0681d6db98f6208e9f36717b128",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }

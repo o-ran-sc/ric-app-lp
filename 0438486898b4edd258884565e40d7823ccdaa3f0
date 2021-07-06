@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4864a244_ff277865",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-07-06T22:13:51Z",
+      "side": 1,
+      "message": "Looks like this time it works after a previous check-in to bump up the docker container version. Now update the release file to sync up with the version.",
+      "revId": "0438486898b4edd258884565e40d7823ccdaa3f0",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

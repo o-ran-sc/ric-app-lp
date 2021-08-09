@@ -253,6 +253,8 @@ def test_init_xapp(monkeypatch, ue_metrics, cell_metrics_1, cell_metrics_2, cell
         
         expected=sdl.get_uedata(self, "9876543")
         assert expected==good_cell
+        expected=main.predict(self, expected)
+        assert expected=="Congestion"
         expected=sdl.get_uedata(self, "3456789")
         try:
             sdl.get_uedata(self, "1234567")

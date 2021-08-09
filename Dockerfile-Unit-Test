@@ -16,13 +16,19 @@
 FROM python:3.8-alpine
 
 # sdl uses hiredis which needs gcc
-RUN apk update && apk add gcc musl-dev
+RUN apk update && apk add gcc musl-dev g++ jpeg-dev zlib-dev
 
 # copy rmr libraries from builder image in lieu of an Alpine package
 COPY --from=nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-alpine3-rmr:4.0.5 /usr/local/lib64/librmr* /usr/local/lib64/
 
+RUN pip install --upgrade pip setuptools wheel
+RUN pip install p5py
+RUN pip install PEP517
+RUN pip install Cython numpy pandas
+RUN pip install --upgrade Pillow
+RUN pip install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 # Upgrade pip, install tox
-RUN pip install --upgrade pip && pip install tox
+RUN pip install tox
 
 # copies
 COPY setup.py tox.ini LICENSE.txt /tmp/

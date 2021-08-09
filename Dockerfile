@@ -24,13 +24,19 @@ COPY --from=nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-alpine3-rmr:4.0.5 /usr/local
 ENV LD_LIBRARY_PATH /usr/local/lib/:/usr/local/lib64
 
 # sdl needs gcc
-RUN apk update && apk add gcc musl-dev
+RUN apk update && apk add gcc musl-dev g++ jpeg-dev zlib-dev
 
 # Install
 COPY setup.py /tmp
 COPY LICENSE.txt /tmp/
 COPY lp /tmp/lp
+RUN pip install --upgrade pip setuptools wheel
 RUN pip install /tmp
+RUN pip install p5py
+RUN pip install PEP517
+RUN pip install Cython pandas 
+RUN pip install --upgrade Pillow
+RUN pip install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
 # TO DO: ADD RUN COMMANDS 
 ENV PYTHONUNBUFFERED 1

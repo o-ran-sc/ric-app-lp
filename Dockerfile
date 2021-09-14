@@ -13,7 +13,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 # ==================================================================================
-FROM python:3.8-alpine
+FROM frolvlad/alpine-miniconda3
 
 # RMR setup
 RUN mkdir -p /opt/route/
@@ -24,13 +24,15 @@ COPY --from=nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-alpine3-rmr:4.0.5 /usr/local
 ENV LD_LIBRARY_PATH /usr/local/lib/:/usr/local/lib64
 
 # sdl needs gcc
-RUN apk update && apk add gcc musl-dev
+RUN apk update && apk add gcc musl-dev g++ jpeg-dev zlib-dev 
 
 # Install
 COPY setup.py /tmp
 COPY LICENSE.txt /tmp/
 COPY lp /tmp/lp
-RUN pip install /tmp
+RUN unzip /tmp/lp/model.zip -d /tmp && \
+pip install --upgrade pip && \ 
+pip install /tmp  
 
 # TO DO: ADD RUN COMMANDS 
 ENV PYTHONUNBUFFERED 1

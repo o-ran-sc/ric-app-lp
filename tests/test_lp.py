@@ -13,6 +13,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 # ==================================================================================
+import os
 import json
 import time
 from contextlib import suppress
@@ -253,6 +254,10 @@ def test_init_xapp(monkeypatch, ue_metrics, cell_metrics_1, cell_metrics_2, cell
         
         expected=sdl.get_uedata(self, "9876543")
         assert expected==good_cell
+        cwd = os.getcwd()
+        print("Current working directory: {0}".format(cwd))
+        expected=main.predict(self, expected)
+        assert expected=="Normal"
         expected=sdl.get_uedata(self, "3456789")
         try:
             sdl.get_uedata(self, "1234567")

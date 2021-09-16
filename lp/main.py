@@ -21,15 +21,25 @@ RMR Messages
 for now re-use the 30000 to receive a UEID for prediction
 """
 
+from zipfile import ZipFile
 import json
 from os import getenv
 from ricxappframe.xapp_frame import RMRXapp, rmr
 from lp import sdl
 from lp.exceptions import UENotFound, CellNotFound
 
-
-# pylint: disable=invalid-name
+import os
+import sys
+import logging
+import numpy as np
+import torch
+from numpy import zeros, newaxis
+from torch.nn import functional as F
+from torch.utils.data import TensorDataset, DataLoader
+import torch.nn as nn
+from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 rmr_xapp = None
+ai_model = None
 
 
 def post_init(self):
@@ -92,7 +102,47 @@ def predict(self, uedata):
     For now it just returns dummy data
     :return:
     """
-    return "Overloaded!"
+    unseen_data = [3735, 0, 27648, 2295, 18, -1, 16383,-1, -1, -1]
+    ai_model = load_model_parameter()
+    ret = predict_unseen_data(ai_model, unseen_data)
+    print("unseen_data: ", unseen_data)
+    print("Classification: ", ret)
+    return ret
+
+def load_model_parameter():
+    PATH = 'model.pth'
+    if not os.path.exists(PATH):
+        with ZipFile('model.zip', 'r') as zip:
+            zip.printdir()
+            zip.extractall()
+    input_dim = 10
+    hidden_dim = 256
+    layer_dim = 3
+    output_dim = 2
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = LSTMClassifier(input_dim, hidden_dim, layer_dim, output_dim)
+    # model = model.to(device)
+    model.load_state_dict(torch.load(PATH))
+    model.eval()
+    # print(model)
+    return model
+
+def predict_unseen_data(model, unseen_data):
+    np_data = np.asarray(unseen_data, dtype=np.float32)
+    X_grouped = np_data[newaxis, newaxis, :]
+    X_grouped = torch.tensor(X_grouped.transpose(0, 2, 1)).float()
+    y_fake = torch.tensor([0] * len(X_grouped)).long()
+    tensor_test = TensorDataset(X_grouped, y_fake)
+    test_dl = DataLoader(tensor_test, batch_size=1, shuffle=False)
+    ret = []
+    for batch, _ in test_dl:
+        batch = batch.permute(0, 2, 1)
+        out = model(batch)
+        y_hat = F.log_softmax(out, dim=1).argmax(dim=1)
+        ret += y_hat.tolist()
+    if ret[0] == 0:
+        return "Normal"
+    return "Congestion"
 
 def start(thread=False):
     """
@@ -100,7 +150,7 @@ def start(thread=False):
     for "real" (no thread, real SDL), but also easily modified for unit testing
     (e.g., use_fake_sdl). The defaults for this function are for the Dockerized xapp.
     """
-    global rmr_xapp
+    global rmr_xapp, ai_model
     fake_sdl = getenv("USE_FAKE_SDL", None)
     rmr_xapp = RMRXapp(default_handler,
                        config_handler=handle_config_change,
@@ -108,6 +158,7 @@ def start(thread=False):
                        post_init=post_init,
                        use_fake_sdl=bool(fake_sdl))
     rmr_xapp.register_callback(lp_req_handler, 30000)
+    ai_model = load_model_parameter()
     rmr_xapp.run(thread)
 
 
@@ -124,3 +175,25 @@ def get_stats():
     """
     return {"DefCalled": rmr_xapp.def_hand_called,
             "SteeringRequests": rmr_xapp.traffic_steering_requests}
+
+class LSTMClassifier(nn.Module):
+    def __init__(self, input_dim, hidden_dim, layer_dim, output_dim):
+        super().__init__()
+        self.hidden_dim = hidden_dim
+        self.layer_dim = layer_dim
+        self.rnn = nn.LSTM(input_dim, hidden_dim, layer_dim, batch_first=True)
+        self.fc = nn.Linear(hidden_dim, output_dim)
+        self.batch_size = None
+        self.hidden = None
+
+    def forward(self, x):
+        h0, c0 = self.init_hidden(x)
+        out, (hn, cn) = self.rnn(x, (h0, c0))
+        out = self.fc(out[:, -1, :])
+        return out
+
+    def init_hidden(self, x):
+        h0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim)
+        c0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim)
+        return [t for t in (h0, c0)]
+

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eceb9cd_55f55b3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-09-16T04:12:51Z",
+      "side": 1,
+      "message": "With the help from IT I was able to make the tox job pass. So try to commit the AI model and additional code changes/unit tests.",
+      "revId": "cb7ba951ed18fed3d1d806b58cc81b36d3f93bca",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

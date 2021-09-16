@@ -1,10 +1,10 @@
 ---
 distribution_type: container
-container_release_tag: 0.1.0
+container_release_tag: 0.2.0
 container_pull_registry: nexus3.o-ran-sc.org:10004
 container_push_registry: nexus3.o-ran-sc.org:10002
 project: ric-app/lp
-ref: 5c276bf4c5ecade28e46e06f2a92f31d1e278c36
+ref: 63df192114ea3c8390786f89711ebbb6e075bc69
 containers:
     - name: ric-app-lp
-      version: 0.1.0
+      version: 0.2.0

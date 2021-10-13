@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a66b1554_1ebb8d72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-10-13T04:31:01Z",
+      "side": 1,
+      "message": "Successfully commit a model file larger than the 5MB size limit to the git lfs backend set up by the LF infra team with an AWS S3 bucket. I will send out a summary on the steps on how to do it.",
+      "revId": "3d2b6ffe67c1efcd8c6171c5a7f5fd8c782ff9ec",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

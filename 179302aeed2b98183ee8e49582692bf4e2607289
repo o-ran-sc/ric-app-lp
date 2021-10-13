@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "351d7999_389240f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-10-13T16:52:28Z",
+      "side": 1,
+      "message": "Check in a large model file that exceeds the 5MB size limit for OSC gerrit. It can be checked in directly via the git-lfs integration.",
+      "revId": "179302aeed2b98183ee8e49582692bf4e2607289",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

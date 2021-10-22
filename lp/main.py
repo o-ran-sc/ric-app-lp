@@ -24,7 +24,7 @@ for now re-use the 30000 to receive a UEID for prediction
 from zipfile import ZipFile
 import json
 from os import getenv
-from ricxappframe.xapp_frame import RMRXapp, rmr
+from ricxappframe.xapp_frame import RMRXapp, rmr, Xapp
 from lp import sdl
 from lp.exceptions import UENotFound, CellNotFound
 
@@ -38,6 +38,10 @@ from torch.nn import functional as F
 from torch.utils.data import TensorDataset, DataLoader
 import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+
+from lp.db import DATABASE, DUMMY
+import lp.populate as populate
+
 rmr_xapp = None
 ai_model = None
 
@@ -147,6 +151,19 @@ def predict_unseen_data(model, unseen_data):
         return "Normal"
     return "Congestion"
 
+def connectdb(thread=False):
+    # Create a connection to InfluxDB if thread=True, otherwise it will create a dummy data instance
+    global db
+    global cell_data
+    if thread:
+        db = DUMMY()
+    else:
+        populate.populatedb()  # temporary method to populate db, it will be removed when data will be coming through KPIMON to influxDB
+
+        db = DATABASE('CellData')
+        db.read_data("cellMeas")
+        cell_data = db.data.values.tolist()  # needs to be updated in future when live feed will be coming through KPIMON to influxDB
+
 def start(thread=False):
     """
     This is a convenience function that allows this xapp to run in Docker
@@ -155,6 +172,7 @@ def start(thread=False):
     """
     global rmr_xapp, ai_model
     fake_sdl = getenv("USE_FAKE_SDL", None)
+    connectdb(thread)
     rmr_xapp = RMRXapp(default_handler,
                        config_handler=handle_config_change,
                        rmr_port=4560,

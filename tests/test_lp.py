@@ -268,6 +268,9 @@ def test_init_xapp(monkeypatch, ue_metrics, cell_metrics_1, cell_metrics_2, cell
     # establish config
     init_config_file()
 
+    # test db connection
+    main.connectdb(thread=True)
+
     # start lp
     main.start(thread=True)
 

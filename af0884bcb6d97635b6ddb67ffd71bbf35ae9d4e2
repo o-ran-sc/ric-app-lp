@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6af1c336_45539ff8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-10-23T22:13:09Z",
+      "side": 1,
+      "message": "Add code for LP xApp to read/write influxDB. Will need to update the csv file if that\u0027s not exactly the cell measurement schema.",
+      "revId": "af0884bcb6d97635b6ddb67ffd71bbf35ae9d4e2",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

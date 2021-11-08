@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c070bcb5_7a3dff44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-11-08T22:49:11Z",
+      "side": 1,
+      "message": "Provided a sample dataset for training so others know what parameters are to be consumed for the current model.",
+      "revId": "34a823c3a012e7b6a4c66ef92f94f693940b25ac",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

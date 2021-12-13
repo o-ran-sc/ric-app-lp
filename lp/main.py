@@ -21,6 +21,7 @@ RMR Messages
 for now re-use the 30000 to receive a UEID for prediction
 """
 
+import schedule
 from zipfile import ZipFile
 import json
 from os import getenv
@@ -42,6 +43,9 @@ from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 from lp.db import DATABASE, DUMMY
 import lp.populate as populate
 
+xapp = None
+pos = 0
+cell_data = None
 rmr_xapp = None
 ai_model = None
 
@@ -100,16 +104,34 @@ def lp_req_handler(self, summary, sbuf):
         except UENotFound:
             self.logger.warning("lp_req_handler received a TS Request for a UE that does not exist!")
 
-def predict(self, uedata):
+def entry(self):
+    """  Read from DB in an infinite loop and run prediction every second
+      TODO: do training as needed in the future
+    """
+    schedule.every(1).seconds.do(run_prediction, self)
+    while True:
+        schedule.run_pending()
+
+def run_prediction(self):
+    """Read the latest cell_meas sample from influxDB and run it by the model inference
+    """
+
+    global pos
+    sample = [3735, 0, 27648, 2295, 18, -1, 16383,-1, -1, -1]
+    if cell_data:
+        pos = (pos + 1) % len(cell_data)  # iterate through entire list one at a time
+        sample = cell_data[pos]
+    predict(self, sample)
+
+def predict(self, celldata):
     """
     This is the method that's to perform prediction based on a model
     For now it just returns dummy data
     :return:
     """
-    unseen_data = [3735, 0, 27648, 2295, 18, -1, 16383,-1, -1, -1]
     ai_model = load_model_parameter()
-    ret = predict_unseen_data(ai_model, unseen_data)
-    print("unseen_data: ", unseen_data)
+    ret = predict_unseen_data(ai_model, celldata)
+    print("celldata: ", celldata)
     print("Classification: ", ret)
     return ret
 
@@ -163,6 +185,7 @@ def connectdb(thread=False):
         db = DATABASE('CellData')
         db.read_data("cellMeas")
         cell_data = db.data.values.tolist()  # needs to be updated in future when live feed will be coming through KPIMON to influxDB
+        print("cell_data: ", cell_data)
 
 def start(thread=False):
     """
@@ -170,24 +193,19 @@ def start(thread=False):
     for "real" (no thread, real SDL), but also easily modified for unit testing
     (e.g., use_fake_sdl). The defaults for this function are for the Dockerized xapp.
     """
-    global rmr_xapp, ai_model
+    global xapp, ai_model
     fake_sdl = getenv("USE_FAKE_SDL", None)
+    xapp = Xapp(entrypoint=entry, rmr_port=4560, use_fake_sdl=fake_sdl)
     connectdb(thread)
-    rmr_xapp = RMRXapp(default_handler,
-                       config_handler=handle_config_change,
-                       rmr_port=4560,
-                       post_init=post_init,
-                       use_fake_sdl=bool(fake_sdl))
-    rmr_xapp.register_callback(lp_req_handler, 30000)
     ai_model = load_model_parameter()
-    rmr_xapp.run(thread)
+    xapp.run()
 
 
 def stop():
     """
     can only be called if thread=True when started
     """
-    rmr_xapp.stop()
+    xapp.stop()
 
 
 def get_stats():

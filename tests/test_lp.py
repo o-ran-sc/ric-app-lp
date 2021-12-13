@@ -253,6 +253,8 @@ def test_init_xapp(monkeypatch, ue_metrics, cell_metrics_1, cell_metrics_2, cell
         
         expected=sdl.get_uedata(self, "9876543")
         assert expected==good_cell
+        expected=main.run_prediction(self)
+        assert expected=="Normal"
         expected=main.predict(self, expected)
         assert expected=="Normal"
         expected=sdl.get_uedata(self, "3456789")
@@ -272,7 +274,7 @@ def test_init_xapp(monkeypatch, ue_metrics, cell_metrics_1, cell_metrics_2, cell
     main.connectdb(thread=True)
 
     # start lp
-    main.start(thread=True)
+    #main.start(thread=False)
 
     # wait a bit then update config
     time.sleep(1)

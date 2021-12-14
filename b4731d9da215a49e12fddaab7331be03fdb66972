@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f070cc50_d7d203ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001064
+      },
+      "writtenOn": "2021-12-14T21:57:32Z",
+      "side": 1,
+      "message": "Actually it only bumps up the version number for the container -- I was able to do it all at once by updating the release file with the version bump. It needs to be a separate commit.",
+      "revId": "b4731d9da215a49e12fddaab7331be03fdb66972",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}

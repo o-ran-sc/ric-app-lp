@@ -33,6 +33,23 @@
       "message": "recheck",
       "revId": "3fac9b16df612b28de07050da370ce5c42ebb2ce",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "458d4b58_142b4a7b",
+        "filename": "releases/container-release-ric-app-lp.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001074
+      },
+      "writtenOn": "2021-12-15T20:31:44Z",
+      "side": 1,
+      "message": "I seems you need to point to: b4731d9da215a49e12fddaab7331be03fdb66972\nThis commit points to the changes in the container-tag.yaml file",
+      "revId": "3fac9b16df612b28de07050da370ce5c42ebb2ce",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
     }
   ]
 }

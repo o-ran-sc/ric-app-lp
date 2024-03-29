@@ -82,7 +82,7 @@ jobs:
       GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
       TOX_ENVS: '["code","flake8"]'
-      PRE_BUILD_SCRIPT: "https://raw.githubusercontent.com/o-ran-sc/ci-management/master/jjb/shell/install-rpm-rmr.sh"
+      PRE_BUILD_SCRIPT: "shell/install-rpm-rmr.sh"
 
   vote:
     if: ${{ always() }}

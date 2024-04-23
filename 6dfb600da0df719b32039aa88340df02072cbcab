@@ -1,0 +1,8 @@
+Verified+1: ORAN Jobbuilder <releng+oran-jobbuilder@linuxfoundation.org>
+Verified+1: ORAN Required GHA <releng+oran.required.gha@linuxfoundation.org>
+Code-Review+2: Matthew Watkins <mwatkins@linuxfoundation.org>
+Submitted-by: Matthew Watkins <mwatkins@linuxfoundation.org>
+Submitted-at: Tue, 23 Apr 2024 10:25:32 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/ric-app/lp/+/12720
+Project: ric-app/lp
+Branch: refs/heads/master
